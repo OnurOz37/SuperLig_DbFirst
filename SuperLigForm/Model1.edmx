@@ -1,0 +1,393 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SuperLigModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Antrenor">
+          <Key>
+            <PropertyRef Name="antrenorID" />
+          </Key>
+          <Property Name="antrenorID" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Adi" Type="varchar" MaxLength="50" />
+          <Property Name="TakimID" Type="int" />
+          <Property Name="Ulke" Type="varchar" MaxLength="50" />
+          <Property Name="Yas" Type="int" />
+          <Property Name="CalistidigiTakimSayisi" Type="int" />
+          <Property Name="CalistiridigiTakim" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Futbolcu">
+          <Key>
+            <PropertyRef Name="futbolcuID" />
+          </Key>
+          <Property Name="futbolcuID" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Adi" Type="varchar" MaxLength="50" />
+          <Property Name="TakimID" Type="int" />
+          <Property Name="Yas" Type="int" />
+          <Property Name="OynadigiTakimSayisi" Type="int" />
+          <Property Name="Takim" Type="varchar" MaxLength="50" />
+          <Property Name="Ulke" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Maclar">
+          <Key>
+            <PropertyRef Name="MacID" />
+          </Key>
+          <Property Name="MacID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EvSahibiTakim" Type="tinyint" />
+          <Property Name="RakipTakim" Type="tinyint" />
+          <Property Name="EAttigiGol" Type="tinyint" />
+          <Property Name="RAttigiGol" Type="tinyint" />
+          <Property Name="Hafta" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Takim">
+          <Key>
+            <PropertyRef Name="TakimID" />
+          </Key>
+          <Property Name="TakimID" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TakimAdi" Type="nvarchar" MaxLength="50" />
+          <Property Name="OynadigiMac" Type="tinyint" />
+          <Property Name="Galibiyet" Type="tinyint" />
+          <Property Name="Maglubiyet" Type="tinyint" />
+          <Property Name="Beraberlik" Type="tinyint" />
+          <Property Name="Averaj" Type="int" />
+          <Property Name="AttigiGol" Type="int" />
+          <Property Name="YedigiGol" Type="int" />
+          <Property Name="PuanDurumu" Type="int" />
+        </EntityType>
+        <!--Erreurs détectées durant la génération :
+avertissement 6002: La table/vue 'SuperLig.dbo.v_OlasiMaclar' n'a pas de clé primaire définie. La clé a été déduite et la définition a été créée en tant que table/vue en lecture seule.-->
+        <EntityType Name="v_OlasiMaclar">
+          <Key>
+            <PropertyRef Name="evsahibid" />
+            <PropertyRef Name="konukid" />
+          </Key>
+          <Property Name="evsahibid" Type="tinyint" Nullable="false" />
+          <Property Name="evsahibiadi" Type="nvarchar" MaxLength="50" />
+          <Property Name="konukid" Type="tinyint" Nullable="false" />
+          <Property Name="konukadi" Type="nvarchar" MaxLength="50" />
+          <Property Name="mackodu" Type="int" />
+        </EntityType>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_FiksturOlustur" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_LigiOynat" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_MaclariOynat_v2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_PuanlariSifirla" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="SuperLigModelStoreContainer">
+          <EntitySet Name="Antrenor" EntityType="Self.Antrenor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Futbolcu" EntityType="Self.Futbolcu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Maclar" EntityType="Self.Maclar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Takim" EntityType="Self.Takim" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="v_OlasiMaclar" EntityType="Self.v_OlasiMaclar" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[v_OlasiMaclar].[evsahibid] AS [evsahibid], 
+[v_OlasiMaclar].[evsahibiadi] AS [evsahibiadi], 
+[v_OlasiMaclar].[konukid] AS [konukid], 
+[v_OlasiMaclar].[konukadi] AS [konukadi], 
+[v_OlasiMaclar].[mackodu] AS [mackodu]
+FROM [dbo].[v_OlasiMaclar] AS [v_OlasiMaclar]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SuperLigModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Antrenor">
+          <Key>
+            <PropertyRef Name="antrenorID" />
+          </Key>
+          <Property Name="antrenorID" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Adi" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TakimID" Type="Int32" />
+          <Property Name="Ulke" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Yas" Type="Int32" />
+          <Property Name="CalistidigiTakimSayisi" Type="Int32" />
+          <Property Name="CalistiridigiTakim" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Futbolcu">
+          <Key>
+            <PropertyRef Name="futbolcuID" />
+          </Key>
+          <Property Name="futbolcuID" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Adi" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TakimID" Type="Int32" />
+          <Property Name="Yas" Type="Int32" />
+          <Property Name="OynadigiTakimSayisi" Type="Int32" />
+          <Property Name="Takim" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Ulke" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Maclar">
+          <Key>
+            <PropertyRef Name="MacID" />
+          </Key>
+          <Property Name="MacID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EvSahibiTakim" Type="Byte" />
+          <Property Name="RakipTakim" Type="Byte" />
+          <Property Name="EAttigiGol" Type="Byte" />
+          <Property Name="RAttigiGol" Type="Byte" />
+          <Property Name="Hafta" Type="Byte" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Takim">
+          <Key>
+            <PropertyRef Name="TakimID" />
+          </Key>
+          <Property Name="TakimID" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TakimAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OynadigiMac" Type="Byte" />
+          <Property Name="Galibiyet" Type="Byte" />
+          <Property Name="Maglubiyet" Type="Byte" />
+          <Property Name="Beraberlik" Type="Byte" />
+          <Property Name="Averaj" Type="Int32" />
+          <Property Name="AttigiGol" Type="Int32" />
+          <Property Name="YedigiGol" Type="Int32" />
+          <Property Name="PuanDurumu" Type="Int32" />
+        </EntityType>
+        <EntityType Name="v_OlasiMaclar">
+          <Key>
+            <PropertyRef Name="evsahibid" />
+            <PropertyRef Name="konukid" />
+          </Key>
+          <Property Name="evsahibid" Type="Byte" Nullable="false" />
+          <Property Name="evsahibiadi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="konukid" Type="Byte" Nullable="false" />
+          <Property Name="konukadi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="mackodu" Type="Int32" />
+        </EntityType>
+        <EntityContainer Name="SuperLigEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Antrenor" EntityType="Self.Antrenor" />
+          <EntitySet Name="Futbolcu" EntityType="Self.Futbolcu" />
+          <EntitySet Name="Maclar" EntityType="Self.Maclar" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Takim" EntityType="Self.Takim" />
+          <EntitySet Name="v_OlasiMaclar" EntityType="Self.v_OlasiMaclar" />
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_FiksturOlustur" />
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(SuperLigModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(SuperLigModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_LigiOynat" />
+          <FunctionImport Name="sp_MaclariOynat_v2" />
+          <FunctionImport Name="sp_PuanlariSifirla" />
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+        </EntityContainer>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SuperLigModelStoreContainer" CdmEntityContainer="SuperLigEntities">
+          <EntitySetMapping Name="Antrenor">
+            <EntityTypeMapping TypeName="SuperLigModel.Antrenor">
+              <MappingFragment StoreEntitySet="Antrenor">
+                <ScalarProperty Name="CalistiridigiTakim" ColumnName="CalistiridigiTakim" />
+                <ScalarProperty Name="antrenorID" ColumnName="antrenorID" />
+                <ScalarProperty Name="Adi" ColumnName="Adi" />
+                <ScalarProperty Name="TakimID" ColumnName="TakimID" />
+                <ScalarProperty Name="Ulke" ColumnName="Ulke" />
+                <ScalarProperty Name="Yas" ColumnName="Yas" />
+                <ScalarProperty Name="CalistidigiTakimSayisi" ColumnName="CalistidigiTakimSayisi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Futbolcu">
+            <EntityTypeMapping TypeName="SuperLigModel.Futbolcu">
+              <MappingFragment StoreEntitySet="Futbolcu">
+                <ScalarProperty Name="Ulke" ColumnName="Ulke" />
+                <ScalarProperty Name="Takim" ColumnName="Takim" />
+                <ScalarProperty Name="futbolcuID" ColumnName="futbolcuID" />
+                <ScalarProperty Name="Adi" ColumnName="Adi" />
+                <ScalarProperty Name="TakimID" ColumnName="TakimID" />
+                <ScalarProperty Name="Yas" ColumnName="Yas" />
+                <ScalarProperty Name="OynadigiTakimSayisi" ColumnName="OynadigiTakimSayisi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Maclar">
+            <EntityTypeMapping TypeName="SuperLigModel.Maclar">
+              <MappingFragment StoreEntitySet="Maclar">
+                <ScalarProperty Name="MacID" ColumnName="MacID" />
+                <ScalarProperty Name="EvSahibiTakim" ColumnName="EvSahibiTakim" />
+                <ScalarProperty Name="RakipTakim" ColumnName="RakipTakim" />
+                <ScalarProperty Name="EAttigiGol" ColumnName="EAttigiGol" />
+                <ScalarProperty Name="RAttigiGol" ColumnName="RAttigiGol" />
+                <ScalarProperty Name="Hafta" ColumnName="Hafta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="SuperLigModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Takim">
+            <EntityTypeMapping TypeName="SuperLigModel.Takim">
+              <MappingFragment StoreEntitySet="Takim">
+                <ScalarProperty Name="TakimID" ColumnName="TakimID" />
+                <ScalarProperty Name="TakimAdi" ColumnName="TakimAdi" />
+                <ScalarProperty Name="OynadigiMac" ColumnName="OynadigiMac" />
+                <ScalarProperty Name="Galibiyet" ColumnName="Galibiyet" />
+                <ScalarProperty Name="Maglubiyet" ColumnName="Maglubiyet" />
+                <ScalarProperty Name="Beraberlik" ColumnName="Beraberlik" />
+                <ScalarProperty Name="Averaj" ColumnName="Averaj" />
+                <ScalarProperty Name="AttigiGol" ColumnName="AttigiGol" />
+                <ScalarProperty Name="YedigiGol" ColumnName="YedigiGol" />
+                <ScalarProperty Name="PuanDurumu" ColumnName="PuanDurumu" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="v_OlasiMaclar">
+            <EntityTypeMapping TypeName="SuperLigModel.v_OlasiMaclar">
+              <MappingFragment StoreEntitySet="v_OlasiMaclar">
+                <ScalarProperty Name="evsahibid" ColumnName="evsahibid" />
+                <ScalarProperty Name="evsahibiadi" ColumnName="evsahibiadi" />
+                <ScalarProperty Name="konukid" ColumnName="konukid" />
+                <ScalarProperty Name="konukadi" ColumnName="konukadi" />
+                <ScalarProperty Name="mackodu" ColumnName="mackodu" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="SuperLigModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="SuperLigModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="SuperLigModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_FiksturOlustur" FunctionName="SuperLigModel.Store.sp_FiksturOlustur" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="SuperLigModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SuperLigModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="SuperLigModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SuperLigModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_LigiOynat" FunctionName="SuperLigModel.Store.sp_LigiOynat" />
+          <FunctionImportMapping FunctionImportName="sp_MaclariOynat_v2" FunctionName="SuperLigModel.Store.sp_MaclariOynat_v2" />
+          <FunctionImportMapping FunctionImportName="sp_PuanlariSifirla" FunctionName="SuperLigModel.Store.sp_PuanlariSifirla" />
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="SuperLigModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="SuperLigModel.Store.sp_upgraddiagrams" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
